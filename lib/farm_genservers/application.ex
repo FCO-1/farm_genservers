@@ -16,7 +16,8 @@ defmodule FarmGenservers.Application do
       {Phoenix.PubSub, name: FarmGenservers.PubSub},
       # Start the Endpoint (http/https)
       FarmGenserversWeb.Endpoint,
-      #FarmGenservers.Gen1
+      FarmGenservers.Gen1,
+      FarmGenservers.PubsubListener
       # Start a worker by calling: FarmGenservers.Worker.start_link(arg)
       # {FarmGenservers.Worker, arg}
     ]

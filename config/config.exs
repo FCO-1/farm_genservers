@@ -9,6 +9,8 @@ import Config
 
 config :farm_genservers,
   ecto_repos: [FarmGenservers.Repo]
+  #generators: [binary_id: true]
+
 
 # Configures the endpoint
 config :farm_genservers, FarmGenserversWeb.Endpoint,
