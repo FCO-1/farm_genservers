@@ -3,7 +3,7 @@ defmodule FarmGenservers.Gen1 do
 
   require Logger
 
-  @stream_endpoint "wss://ws.testnet.bitmex.com/realtime?subscribe=instrument,orderBookL2_25:XBTUSD"
+  @stream_endpoint "wss://ws.testnet.bitmex.com/realtime?subscribe=orderBookL2_25:XBTUSD"
   @moduledoc """
   Documentation for `StreamerEx`.
   """
@@ -31,15 +31,6 @@ defmodule FarmGenservers.Gen1 do
     IO.inspect(event)
   end
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> StreamerEx.hello()
-      :world
-
-  """
 
 
 
