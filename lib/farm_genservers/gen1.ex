@@ -2,8 +2,9 @@ defmodule FarmGenservers.Gen1 do
   use WebSockex
 
   require Logger
+  alias FarmGenservers.PubsubFunctions
 
-  @stream_endpoint "wss://ws.testnet.bitmex.com/realtime?subscribe=instrument,orderBookL2_25:XBTUSD"
+  @stream_endpoint "wss://ws.testnet.bitmex.com/realtime?subscribe=orderBookL2_25:XBTUSD"
   @moduledoc """
   Documentation for `StreamerEx`.
   """
@@ -28,18 +29,13 @@ defmodule FarmGenservers.Gen1 do
   end
 
   defp process_event(event) do
-    IO.inspect(event)
+    event["data"]
+
+    #IO.inspect(event)
+
+    PubsubFunctions.broadcast_date_recive(event, :data_recive)
   end
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> StreamerEx.hello()
-      :world
-
-  """
 
 
 

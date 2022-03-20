@@ -18,6 +18,14 @@ defmodule FarmGenserversWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    live "/orders_l25", OrderL25Live.Index, :index
+    live "/orders_l25/new", OrderL25Live.Index, :new
+    live "/orders_l25/:id/edit", OrderL25Live.Index, :edit
+
+    live "/orders_l25/:id", OrderL25Live.Show, :show
+    live "/orders_l25/:id/show/edit", OrderL25Live.Show, :edit
+
   end
 
   # Other scopes may use custom stacks.
