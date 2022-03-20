@@ -1,7 +1,7 @@
 defmodule FarmGenservers.PubsubListener do
   use GenServer
 
-
+  alias  FarmGenservers.Order
 
   defstruct [:ref, :pid]
   require Logger
@@ -20,7 +20,9 @@ defmodule FarmGenservers.PubsubListener do
     def handle_info({:data_recive, event}, state) do
       datos = event["data"]
       IO.inspect(datos, label: "mensaje desde trader")
-
+      unless is_nil(datos) do
+        Order.inserts_orders(datos)
+      end
 
       {:noreply, state}
     end

@@ -1,0 +1,47 @@
+<h1>Listing Orders l25</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.order_l25_index_path(@socket, :index)}>
+    <.live_component
+      module={FarmGenserversWeb.OrderL25Live.FormComponent}
+      id={@order_l25.id || :new}
+      title={@page_title}
+      action={@live_action}
+      order_l25={@order_l25}
+      return_to={Routes.order_l25_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Order</th>
+      <th>Price</th>
+      <th>Side</th>
+      <th>Size</th>
+      <th>Symbol</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="orders_l25">
+    <%= for order_l25 <- @orders_l25 do %>
+      <tr id={"order_l25-#{order_l25.id}"}>
+        <td><%= order_l25.order %></td>
+        <td><%= order_l25.price %></td>
+        <td><%= order_l25.side %></td>
+        <td><%= order_l25.size %></td>
+        <td><%= order_l25.symbol %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.order_l25_show_path(@socket, :show, order_l25) %></span>
+          <span><%= live_patch "Edit", to: Routes.order_l25_index_path(@socket, :edit, order_l25) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: order_l25.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Order l25", to: Routes.order_l25_index_path(@socket, :new) %></span>
