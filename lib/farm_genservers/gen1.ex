@@ -4,16 +4,23 @@ defmodule FarmGenservers.Gen1 do
   require Logger
   alias FarmGenservers.PubsubFunctions
 
-  @stream_endpoint "wss://ws.testnet.bitmex.com/realtime?subscribe=orderBookL2_25:XBTUSD"
-  @moduledoc """
-  Documentation for `StreamerEx`.
-  """
+  @stream_endpoint "wss://ws.testnet.bitmex.com/realtime?subscribe=orderBookL2_25:"
 
-   def start_link(_symbol) do
-    #symbol = String.downcase(_symbol)
+
+  def child_spec(symbol) do
+    %{
+      id: FarmGenservers.Gen1,
+      start: {FarmGenservers.Gen1, :start_link, [symbol]},
+      type: :worker
+
+    }
+  end
+
+   def start_link(symbol) do
+    symbol = String.upcase(symbol)
 
     WebSockex.start_link(
-      @stream_endpoint,
+      "#{@stream_endpoint}#{symbol}",
       __MODULE__,
       nil
     )

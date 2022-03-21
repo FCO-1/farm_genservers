@@ -139,16 +139,28 @@ defmodule FarmGenservers.Order do
 
   end
 
+  def update_order_s(order_id, _map) do
+    query = from o in OrderL25,
+    where: o.order == ^order_id
+    Repo.all(query)
+  end
+
   def create_multi_orders(list_order) do
     Repo.insert_all(OrderL25, list_order)
   end
 
+
+
   def inserts_orders(list) do
     datos = tramamiento(list)
-
     create_multi_orders(datos)
 
   end
+
+  def lauch_ws(_args) do
+    DynamicSupervisor.start_child(FarmGenservers.DynamicSupervisorWs, {FarmGenservers.Gen1, "XBTUSD"})
+  end
+
 
 
 end
