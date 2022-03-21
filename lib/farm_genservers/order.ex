@@ -18,7 +18,10 @@ defmodule FarmGenservers.Order do
 
   """
   def list_orders_l25 do
-    Repo.all(OrderL25)
+   query = from l in OrderL25,
+   order_by: [desc: l.inserted_at]
+
+   Repo.all(query)
   end
 
   @doc """
@@ -157,8 +160,8 @@ defmodule FarmGenservers.Order do
 
   end
 
-  def lauch_ws(_args) do
-    DynamicSupervisor.start_child(FarmGenservers.DynamicSupervisorWs, {FarmGenservers.Gen1, "XBTUSD"})
+  def lauch_ws(args) do
+    DynamicSupervisor.start_child(FarmGenservers.DynamicSupervisorWs, {FarmGenservers.Gen1, args} )
   end
 
 
