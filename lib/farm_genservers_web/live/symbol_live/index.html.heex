@@ -1,0 +1,41 @@
+<h1>Listing Symbols</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.symbol_index_path(@socket, :index)}>
+    <.live_component
+      module={FarmGenserversWeb.SymbolLive.FormComponent}
+      id={@symbol.id || :new}
+      title={@page_title}
+      action={@live_action}
+      symbol={@symbol}
+      return_to={Routes.symbol_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Provider</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="symbols">
+    <%= for symbol <- @symbols do %>
+      <tr id={"symbol-#{symbol.id}"}>
+        <td><%= symbol.name %></td>
+        <td><%= symbol.provider %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.symbol_show_path(@socket, :show, symbol) %></span>
+          <span><%= live_patch "Edit", to: Routes.symbol_index_path(@socket, :edit, symbol) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: symbol.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Symbol", to: Routes.symbol_index_path(@socket, :new) %></span>
