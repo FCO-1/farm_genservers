@@ -42,7 +42,8 @@ defmodule FarmGenserversWeb.SymbolLive.FormComponent do
 
   defp save_symbol(socket, :new, symbol_params) do
     case Ctxsymbol.create_symbol(symbol_params) do
-      {:ok, _symbol} ->
+      {:ok, symbol} ->
+        Ctxsymbol.lauch_ws(symbol.name)
         {:noreply,
          socket
          |> put_flash(:info, "Symbol created successfully")

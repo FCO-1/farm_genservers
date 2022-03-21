@@ -160,10 +160,6 @@ defmodule FarmGenservers.Order do
 
   end
 
-  def lauch_ws(args) do
-    DynamicSupervisor.start_child(FarmGenservers.DynamicSupervisorWs, {FarmGenservers.Gen1, args} )
-  end
-
 
 
 end

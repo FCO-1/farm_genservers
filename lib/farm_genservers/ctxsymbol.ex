@@ -101,4 +101,8 @@ defmodule FarmGenservers.Ctxsymbol do
   def change_symbol(%Symbol{} = symbol, attrs \\ %{}) do
     Symbol.changeset(symbol, attrs)
   end
+
+  def lauch_ws(args) do
+    DynamicSupervisor.start_child(FarmGenservers.DynamicSupervisorWs, {FarmGenservers.Gen1, args} )
+  end
 end
