@@ -26,6 +26,13 @@ defmodule FarmGenserversWeb.Router do
     live "/orders_l25/:id", OrderL25Live.Show, :show
     live "/orders_l25/:id/show/edit", OrderL25Live.Show, :edit
 
+
+    live "/symbols", SymbolLive.Index, :index
+    live "/symbols/new", SymbolLive.Index, :new
+    live "/symbols/:id/edit", SymbolLive.Index, :edit
+
+    live "/symbols/:id", SymbolLive.Show, :show
+    live "/symbols/:id/show/edit", SymbolLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
