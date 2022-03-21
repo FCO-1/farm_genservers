@@ -18,7 +18,10 @@ defmodule FarmGenservers.Order do
 
   """
   def list_orders_l25 do
-    Repo.all(OrderL25)
+   query = from l in OrderL25,
+   order_by: [desc: l.inserted_at]
+
+   Repo.all(query)
   end
 
   @doc """
@@ -139,16 +142,24 @@ defmodule FarmGenservers.Order do
 
   end
 
+  def update_order_s(order_id, _map) do
+    query = from o in OrderL25,
+    where: o.order == ^order_id
+    Repo.all(query)
+  end
+
   def create_multi_orders(list_order) do
     Repo.insert_all(OrderL25, list_order)
   end
 
+
+
   def inserts_orders(list) do
     datos = tramamiento(list)
-
     create_multi_orders(datos)
 
   end
+
 
 
 end

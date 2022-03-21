@@ -19,13 +19,19 @@ defmodule FarmGenservers.PubsubListener do
 
     def handle_info({:data_recive, event}, state) do
       datos = event["data"]
-      IO.inspect(datos, label: "mensaje desde trader")
+      IO.inspect(event, label: "mensaje desde trader")
       unless is_nil(datos) do
-        Order.inserts_orders(datos)
+        if Map.has_key?(event, "action") do
+          if event["action"] == "insert" do
+            Order.inserts_orders(datos)
+          end
+        end
+
       end
 
       {:noreply, state}
     end
+
 
 
 

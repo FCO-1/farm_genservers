@@ -1,0 +1,31 @@
+<h1>Show Symbol</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.symbol_show_path(@socket, :show, @symbol)}>
+    <.live_component
+      module={FarmGenserversWeb.SymbolLive.FormComponent}
+      id={@symbol.id}
+      title={@page_title}
+      action={@live_action}
+      symbol={@symbol}
+      return_to={Routes.symbol_show_path(@socket, :show, @symbol)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @symbol.name %>
+  </li>
+
+  <li>
+    <strong>Provider:</strong>
+    <%= @symbol.provider %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.symbol_show_path(@socket, :edit, @symbol), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.symbol_index_path(@socket, :index) %></span>
