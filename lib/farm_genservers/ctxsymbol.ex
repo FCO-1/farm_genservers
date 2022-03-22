@@ -117,5 +117,8 @@ defmodule FarmGenservers.Ctxsymbol do
     DynamicSupervisor.start_child(FarmGenservers.DynamicSupervisorWs, {FarmGenservers.Workers.WsListener, args} )
   end
 
+  def terminate_subcription(pid) do
+    DynamicSupervisor.terminate_child(FarmGenservers.DynamicSupervisorWs, pid)
+  end
 
 end

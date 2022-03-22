@@ -16,14 +16,17 @@ defmodule FarmGenservers.Workers.WsListener do
     }
   end
 
+
    def start_link(symbol) do
     symbol = String.upcase(symbol)
 
-    WebSockex.start_link(
+
+    spawn( fn -> WebSockex.start_link(
       "#{@stream_endpoint}#{symbol}",
       __MODULE__,
-      nil
-    )
+      self()
+      )
+   end )
   end
 
   def handle_frame({_type, msg}, state) do
@@ -31,7 +34,7 @@ defmodule FarmGenservers.Workers.WsListener do
       {:ok, event} -> process_event(event)
       {:error, _} -> Logger.error("Unable to parse msg: #{msg}")
     end
-
+    #IO.inspect(state, label: "estado")
     {:ok, state}
   end
 
