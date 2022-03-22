@@ -103,6 +103,6 @@ defmodule FarmGenservers.Ctxsymbol do
   end
 
   def lauch_ws(args) do
-    DynamicSupervisor.start_child(FarmGenservers.DynamicSupervisorWs, {FarmGenservers.Gen1, args} )
+    DynamicSupervisor.start_child(FarmGenservers.DynamicSupervisorWs, {FarmGenservers.Workers.WsListener, args} )
   end
 end

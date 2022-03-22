@@ -1,4 +1,4 @@
-defmodule FarmGenservers.Gen1 do
+defmodule FarmGenservers.Workers.WsListener do
   use WebSockex
 
   require Logger
@@ -9,8 +9,8 @@ defmodule FarmGenservers.Gen1 do
 
   def child_spec(symbol) do
     %{
-      id: FarmGenservers.Gen1,
-      start: {FarmGenservers.Gen1, :start_link, [symbol]},
+      id: FarmGenservers.Workers.WsListener,
+      start: {FarmGenservers.Workers.WsListener, :start_link, [symbol]},
       type: :worker
 
     }

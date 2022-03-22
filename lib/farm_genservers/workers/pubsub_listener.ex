@@ -1,4 +1,4 @@
-defmodule FarmGenservers.PubsubListener do
+defmodule FarmGenservers.Workers.PubsubListener do
   use GenServer
 
   alias  FarmGenservers.Order
