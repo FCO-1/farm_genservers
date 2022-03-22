@@ -148,6 +148,9 @@ defmodule FarmGenservers.Order do
     Repo.all(query)
   end
 
+
+
+
   def create_multi_orders(list_order) do
     Repo.insert_all(OrderL25, list_order)
   end

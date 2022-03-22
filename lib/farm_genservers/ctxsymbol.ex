@@ -105,4 +105,14 @@ defmodule FarmGenservers.Ctxsymbol do
   def lauch_ws(args) do
     DynamicSupervisor.start_child(FarmGenservers.DynamicSupervisorWs, {FarmGenservers.Workers.WsListener, args} )
   end
+
+  def test() do
+    symbols = list_symbols()
+
+      Enum.each(symbols, fn x ->
+        if x["name"] != "" and x["name"] != nil do
+          IO.inspect(x["name"])
+        end
+      end)
+  end
 end
