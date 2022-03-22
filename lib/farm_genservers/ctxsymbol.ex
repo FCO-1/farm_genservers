@@ -17,6 +17,17 @@ defmodule FarmGenservers.Ctxsymbol do
       [%Symbol{}, ...]
 
   """
+
+  def launch_symbols do
+    symbols = list_symbols()
+
+      Enum.each(symbols, fn x ->
+        if x.name != "" and x.name != nil do
+          lauch_ws(x.name)
+        end
+      end)
+  end
+
   def list_symbols do
     Repo.all(Symbol)
   end
@@ -103,6 +114,8 @@ defmodule FarmGenservers.Ctxsymbol do
   end
 
   def lauch_ws(args) do
-    DynamicSupervisor.start_child(FarmGenservers.DynamicSupervisorWs, {FarmGenservers.Gen1, args} )
+    DynamicSupervisor.start_child(FarmGenservers.DynamicSupervisorWs, {FarmGenservers.Workers.WsListener, args} )
   end
+
+
 end
