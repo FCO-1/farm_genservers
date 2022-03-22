@@ -121,4 +121,19 @@ defmodule FarmGenservers.Ctxsymbol do
     DynamicSupervisor.terminate_child(FarmGenservers.DynamicSupervisorWs, pid)
   end
 
+
+  def get_pid_by_name(atom) do
+    Process.whereis(atom)
+  end
+
+  def test_delete_child(name) do
+    name = String.to_atom(name)
+    pid = Process.whereis(name)
+    #terminate_subcription(pid)
+  end
+
+  def pid_whereis(_atom) do
+    :erlang.whereis(:pidethusd)
+  end
+
 end

@@ -8,8 +8,10 @@ defmodule FarmGenservers.Workers.WsListener do
 
 
   def child_spec(symbol) do
+    name = String.downcase(symbol)
+    atom = String.to_atom("ws#{name}")
     %{
-      id: FarmGenservers.Workers.WsListener,
+      id: atom,
       start: {FarmGenservers.Workers.WsListener, :start_link, [symbol]},
       type: :worker
 
@@ -19,7 +21,8 @@ defmodule FarmGenservers.Workers.WsListener do
 
    def start_link(symbol) do
     symbol = String.upcase(symbol)
-    atom = String.to_atom("pid#{symbol}")
+    name = String.downcase(symbol)
+    atom = String.to_atom("pid#{name}")
 
 
 
@@ -30,6 +33,8 @@ defmodule FarmGenservers.Workers.WsListener do
       )
    end )
    Process.register(pid, atom)
+   process = Process.info(pid)
+   IO.inspect(process, label: "pid register")
   end
 
   def handle_frame({_type, msg}, state) do
@@ -37,7 +42,7 @@ defmodule FarmGenservers.Workers.WsListener do
       {:ok, event} -> process_event(event)
       {:error, _} -> Logger.error("Unable to parse msg: #{msg}")
     end
-    IO.inspect(state, label: "estado")
+    IO.inspect(state)
     {:ok, state}
   end
 
@@ -49,6 +54,11 @@ defmodule FarmGenservers.Workers.WsListener do
     PubsubFunctions.broadcast_date_recive(event, :data_recive)
   end
 
+
+  def terminate(reason, state) do
+    IO.puts("Socket Terminating:\n#{inspect reason}\n\n#{inspect state}\n")
+    exit(:normal)
+end
 
 
 
