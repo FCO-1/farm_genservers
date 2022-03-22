@@ -1,0 +1,1 @@
+call "%~dp0\farm_genservers" eval FarmGenservers.Release.migrate
