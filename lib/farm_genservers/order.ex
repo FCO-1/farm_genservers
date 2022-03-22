@@ -116,11 +116,8 @@ defmodule FarmGenservers.Order do
   def get_id_of_list(list) do
     Enum.map(list, fn order ->
       unless is_nil(order["id"]) and order["id"] == "" do
-
           order["id"]
-
       end
-
     end)
   end
 
@@ -172,16 +169,11 @@ defmodule FarmGenservers.Order do
     Repo.all(query)
   end
 
-
-
-
   def create_multi_orders(list_order) do
     OrderL25
     |> Repo.insert_all(list_order)
     |> broadcast(:orders_created)
   end
-
-
 
   def inserts_orders(list) do
     datos = tramamiento(list)
