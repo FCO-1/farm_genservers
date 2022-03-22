@@ -105,6 +105,29 @@ defmodule FarmGenservers.Order do
     OrderL25.changeset(order_l25, attrs)
   end
 
+  def delete_orders_by_order_id(list_ids) do
+    query = from o in OrderL25,
+    where: o.order in ^list_ids
+    query
+    |> Repo.delete_all()
+    |> broadcast(:orders_deleted)
+  end
+
+  def get_id_of_list(list) do
+    Enum.map(list, fn order ->
+      unless is_nil(order["id"]) and order["id"] == "" do
+
+          order["id"]
+
+      end
+
+    end)
+  end
+
+  def delete_multi_orders(list_orders) do
+    list_ids = get_id_of_list(list_orders)
+    delete_orders_by_order_id(list_ids)
+  end
 
   def tramamiento(list) do
     Enum.map(list, fn x ->
@@ -144,7 +167,8 @@ defmodule FarmGenservers.Order do
 
   def update_order_s(order_id, _map) do
     query = from o in OrderL25,
-    where: o.order == ^order_id
+    where: o.order == ^order_id,
+    select: o.order
     Repo.all(query)
   end
 
@@ -152,7 +176,9 @@ defmodule FarmGenservers.Order do
 
 
   def create_multi_orders(list_order) do
-    Repo.insert_all(OrderL25, list_order)
+    OrderL25
+    |> Repo.insert_all(list_order)
+    |> broadcast(:orders_created)
   end
 
 
@@ -163,6 +189,12 @@ defmodule FarmGenservers.Order do
 
   end
 
+  def subscribe do
+    Phoenix.PubSub.subscribe(FarmGenservers.PubSub, "orders")
+  end
 
+  defp broadcast(order, event) do
+    Phoenix.PubSub.broadcast!(FarmGenservers.PubSub, "orders", {event, order})
+  end
 
 end

@@ -6,6 +6,7 @@ defmodule FarmGenserversWeb.OrderL25Live.Index do
 
   @impl true
   def mount(_params, _session, socket) do
+    if connected?(socket), do: Order.subscribe()
     {:ok, assign(socket, :orders_l25, list_orders_l25())}
   end
 
@@ -40,7 +41,20 @@ defmodule FarmGenserversWeb.OrderL25Live.Index do
     {:noreply, assign(socket, :orders_l25, list_orders_l25())}
   end
 
+  @impl true
+  def handle_info({:orders_created, _orders}, socket ) do
+    #{:reply, update(socket, :orders_l25, fn orders_l25 -> [orders | orders_l25]  end)}
+    {:noreply, assign(socket, :orders_l25, list_orders_l25())}
+  end
+
+  def handle_info({:orders_deleted, _orders}, socket ) do
+    {:noreply, assign(socket, :orders_l25, list_orders_l25())}
+  end
+
   defp list_orders_l25 do
     Order.list_orders_l25()
   end
+
+
+
 end

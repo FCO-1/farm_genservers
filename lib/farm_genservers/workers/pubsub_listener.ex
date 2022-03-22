@@ -19,11 +19,14 @@ defmodule FarmGenservers.Workers.PubsubListener do
 
     def handle_info({:data_recive, event}, state) do
       datos = event["data"]
-      IO.inspect(event, label: "mensaje desde trader")
       unless is_nil(datos) do
         if Map.has_key?(event, "action") do
-          if event["action"] == "insert" do
-            Order.inserts_orders(datos)
+          action = event["action"]
+          cond  do
+          action == "insert" ->  Order.inserts_orders(datos)
+          action == "delete" -> Order.delete_multi_orders(datos)
+          true -> Logger.info("No hay accion")
+
           end
         end
 
