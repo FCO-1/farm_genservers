@@ -19,14 +19,17 @@ defmodule FarmGenservers.Workers.WsListener do
 
    def start_link(symbol) do
     symbol = String.upcase(symbol)
+    atom = String.to_atom("pid#{symbol}")
 
 
-    spawn( fn -> WebSockex.start_link(
+
+   pid = spawn( fn -> WebSockex.start_link(
       "#{@stream_endpoint}#{symbol}",
       __MODULE__,
       self()
       )
    end )
+   Process.register(pid, atom)
   end
 
   def handle_frame({_type, msg}, state) do
@@ -34,7 +37,7 @@ defmodule FarmGenservers.Workers.WsListener do
       {:ok, event} -> process_event(event)
       {:error, _} -> Logger.error("Unable to parse msg: #{msg}")
     end
-    #IO.inspect(state, label: "estado")
+    IO.inspect(state, label: "estado")
     {:ok, state}
   end
 
