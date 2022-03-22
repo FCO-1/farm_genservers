@@ -12,6 +12,7 @@ processes = []
 [env]
   PHX_HOST = "polished-smoke-4620.fly.dev"
   PORT = "8080"
+  DATABASE_URL = "postgres://polished_smoke_4620:rxNeOMHbETYik52@top2.nearest.of.polished-smoke-4620-db.internal:5432/polished_smoke_4620"
 
 [experimental]
   allowed_public_ports = []
