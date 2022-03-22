@@ -2,7 +2,6 @@ defmodule FarmGenservers.Workers.LaunchSymbolsWs do
   use Task
 
   alias  FarmGenservers.Ctxsymbol
-  alias FarmGenservers.Ctxsymbol.Symbol
   defstruct [:ref, :pid]
   require Logger
   #import Poison
