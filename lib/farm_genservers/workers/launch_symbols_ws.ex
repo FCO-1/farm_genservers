@@ -9,10 +9,10 @@ defmodule FarmGenservers.Workers.LaunchSymbolsWs do
 
 
     def start_link(_args) do
-      Task.start_link(__MODULE__, :run, [_args])
+      Task.start_link(__MODULE__, :run, [])
     end
 
-    def run(_arg) do
-      Ctxsymbol.test()
+    def run() do
+      Ctxsymbol.launch_symbols()
     end
   end

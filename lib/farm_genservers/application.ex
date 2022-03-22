@@ -19,7 +19,7 @@ defmodule FarmGenservers.Application do
       {DynamicSupervisor, [strategy: :one_for_one, name: FarmGenservers.DynamicSupervisorWs]},
       #{FarmGenservers.Gen1, name: FarmGenservers.Gen1},
       FarmGenservers.Workers.PubsubListener,
-      #FarmGenservers.Workers.LaunchSymbolsWs
+      FarmGenservers.Workers.LaunchSymbolsWs
       # Start a worker by calling: FarmGenservers.Worker.start_link(arg)
       # {FarmGenservers.Worker, arg}
     ]
